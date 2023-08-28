@@ -26,13 +26,19 @@ func GetConnectionString() string {
 	return connectionString
 }
 
+func IsLocal() bool {
+	env := GetEnv("APP_ENV")
+	return env == "local"
+}
+
 func loadEnvs() {
 	err := godotenv.Load()
-	if err != nil {
+	if err != nil && IsLocal() {
 		log.Fatal("Error loading .env file")
 	}
 
 	envs = map[string]string{
+		"APP_ENV":     os.Getenv("APP_ENV"),
 		"DB_HOST":     os.Getenv("DB_HOST"),
 		"DB_PORT":     os.Getenv("DB_PORT"),
 		"DB_NAME":     os.Getenv("DB_NAME"),
