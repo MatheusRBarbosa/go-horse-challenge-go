@@ -1,6 +1,6 @@
 TODO:
 
-- [ ] Dockerfile
+- [X] Dockerfile
 
 - [ ] docker-compose + nginx
 
