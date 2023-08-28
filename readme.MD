@@ -1,15 +1,15 @@
 TODO:
 
-[ ] Dockerfile
+- [ ] Dockerfile
 
-[ ] docker-compose + nginx
+- [ ] docker-compose + nginx
 
-[ ] DB + enpoint de GET
+- [ ] DB + enpoint de GET
 
-[ ] Stress test configuration
+- [ ] Stress test configuration
 
-[ ] Insert endpoint
+- [ ] Insert endpoint
 
-[ ] Redis configuration + Insert async
+- [ ] Redis configuration + Insert async
 
-[ ] Insert async com batch
+- [ ] Insert async com batch
