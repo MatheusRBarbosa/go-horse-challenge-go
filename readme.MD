@@ -4,7 +4,7 @@ TODO:
 
 - [x] docker-compose + nginx
 
-- [ ] DB + enpoint de GET
+- [x] DB + enpoint de GET
 
 - [ ] Stress test configuration
 
