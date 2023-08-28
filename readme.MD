@@ -6,7 +6,9 @@ TODO:
 
 - [x] DB + enpoint de GET
 
-- [ ] Stress test configuration
+- [x] Stress test configuration
+
+- [ ] EC2 test configuration
 
 - [ ] Insert endpoint
 
