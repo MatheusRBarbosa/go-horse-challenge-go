@@ -1,8 +1,8 @@
 TODO:
 
-- [X] Dockerfile
+- [x] Dockerfile
 
-- [ ] docker-compose + nginx
+- [x] docker-compose + nginx
 
 - [ ] DB + enpoint de GET
 

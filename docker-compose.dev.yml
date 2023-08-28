@@ -1,0 +1,45 @@
+version: "3.5"
+services:
+  api1:
+    build: .
+    restart: always
+    hostname: api1
+    expose:
+      - "8080"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.2"
+          memory: "0.5GB"
+
+  api2:
+    build: .
+    restart: always
+    hostname: api1
+    expose:
+      - "8080"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.2"
+          memory: "0.5GB"
+
+  nginx:
+    image: nginx
+    hostname: api
+    volumes:
+      - ./scripts/nginx/:/etc/nginx/
+    depends_on:
+      - api1
+      - api2
+    ports:
+      - "9999:9999"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: "0.5GB"
+
+networks:
+  default:
+    driver: bridge
