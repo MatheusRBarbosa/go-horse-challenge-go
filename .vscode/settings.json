@@ -1,0 +1,16 @@
+{
+    "editor.formatOnSave": true,
+    "editor.bracketPairColorization.enabled": true,
+    "editor.tabSize": 4,
+    "workbench.colorCustomizations": {
+        "activityBar.background": "#000",
+        "activityBar.activeBorder": "#FFF",
+        "activityBar.foreground": "#FFF",
+        "activityBar.inactiveForeground": "#FFF",
+        "statusBar.background": "#000",
+        "statusBarItem.hoverBackground": "#000",
+        "statusBar.foreground": "#15202b",
+        "activityBar.activeBackground": "#292929"
+    
+    }
+}
