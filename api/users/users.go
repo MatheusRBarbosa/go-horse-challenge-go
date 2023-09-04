@@ -32,6 +32,6 @@ func handleCreate(ctx *fiber.Ctx) error {
 		return fiber.NewError(400, err.Error())
 	}
 
-	ctx.Status(200).JSON(res)
+	ctx.Status(201).JSON(res)
 	return nil
 }

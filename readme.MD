@@ -10,7 +10,7 @@ TODO:
 
 - [x] EC2 test configuration
 
-- [ ] Insert endpoint
+- [x] Insert endpoint
 
 - [ ] K6 post + get test
 
