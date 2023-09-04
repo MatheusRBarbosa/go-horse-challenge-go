@@ -8,9 +8,11 @@ TODO:
 
 - [x] Stress test configuration
 
-- [ ] EC2 test configuration
+- [x] EC2 test configuration
 
 - [ ] Insert endpoint
+
+- [ ] K6 post + get test
 
 - [ ] Redis configuration + Insert async
 
