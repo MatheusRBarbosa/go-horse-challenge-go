@@ -27,3 +27,12 @@ func (r *userRepository) GetAll() ([]m.User, error) {
 
 	return persons, nil
 }
+
+func (r *userRepository) Create(u m.User) m.User {
+	result := r.ctx.Create(&u)
+	if result.Error != nil {
+		panic(result.Error.Error())
+	}
+
+	return u
+}

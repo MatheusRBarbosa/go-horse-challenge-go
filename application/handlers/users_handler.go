@@ -25,3 +25,8 @@ func (h *userHandler) GetAll() ([]m.User, error) {
 
 	return users, nil
 }
+
+func (h *userHandler) Create(u m.User) (m.User, error) {
+	u = h.repository.Create(u)
+	return u, nil
+}
