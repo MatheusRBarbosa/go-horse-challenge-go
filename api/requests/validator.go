@@ -3,16 +3,19 @@ package requests
 import (
 	"errors"
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
+	"github.com/matheusrbarbosa/go-horse-challenge/infra/db"
 )
 
 var validate *validator.Validate
 
 func init() {
 	validate = validator.New()
+	validate.RegisterValidation("unique", uniqueFunc)
 }
 
 func getValidator() *validator.Validate {
@@ -26,11 +29,13 @@ type apiError struct {
 
 func ValidateRequest(ctx *fiber.Ctx, req interface{}) error {
 	if err := ctx.BodyParser(req); err != nil {
+		ctx.Status(422)
+		ctx.JSON(fiber.Map{"errors": err.Error()})
 		return err
 	}
 
 	if err := getValidator().Struct(req); err != nil {
-		ctx.Status(fiber.ErrBadRequest.Code)
+		ctx.Status(422)
 		ctx.JSON(fiber.Map{"errors": parseError(err)})
 		return err
 	}
@@ -81,4 +86,17 @@ func parseErrorMessage(fieldError validator.FieldError) string {
 	}
 
 	return fieldError.Error() // default error
+}
+
+func uniqueFunc(fl validator.FieldLevel) bool {
+	table := fl.Param()
+	column := strings.ToLower(fl.FieldName())
+	value := fl.Field().String()
+
+	db := db.Ctx()
+	var result int
+	query := fmt.Sprintf("select count(id) from %s where %s = ?", table, column)
+	db.Raw(query, value).Scan(&result)
+
+	return result == 0
 }

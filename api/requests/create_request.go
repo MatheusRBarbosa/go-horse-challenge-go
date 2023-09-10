@@ -9,7 +9,7 @@ import (
 
 type CreateUserRequest struct {
 	Name      string   `json:"name" validate:"required,lte=255"`
-	Nickname  string   `json:"nickname" validate:"required,lte=32"`
+	Nickname  string   `json:"nickname" validate:"required,lte=32,unique=users"`
 	Birthdate string   `json:"birthDate" validate:"required,datetime=2006-01-02"`
 	Stack     []string `json:"stack"`
 }
