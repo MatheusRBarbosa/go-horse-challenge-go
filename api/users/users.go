@@ -6,7 +6,7 @@ import (
 	"github.com/matheusrbarbosa/go-horse-challenge/application/handlers"
 )
 
-func handleGet(ctx *fiber.Ctx) error {
+func handleGetAll(ctx *fiber.Ctx) error {
 	handler := handlers.UserHandler()
 	res, err := handler.GetAll()
 	if err != nil {

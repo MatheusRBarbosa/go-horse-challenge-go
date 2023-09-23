@@ -4,6 +4,7 @@ import * as chance from "./chance.min.js";
 import { randomLanguage, randomStack } from "./languages.min.js";
 
 const c = chance.Chance();
+const userIds = [];
 
 function makeUser() {
   const person = {
@@ -36,62 +37,71 @@ export const options = {
       name: "GHC: barbosa",
     },
   },
-  stages: [{ duration: "5s", target: 1 }],
+  stages: [{ duration: "3s", target: 1 }],
 };
 
-export default function () {
-  const baseUrl = "http://localhost:9999";
+const baseUrl = "http://localhost:9999";
 
-  let res1 = http.get(`${baseUrl}/api/users`, {
+export default function () {
+  createUser();
+  sleep(1);
+
+  getUser();
+  sleep(1);
+
+  searchTerm();
+  sleep(1);
+}
+
+const getUser = () => {
+  const randomId = userIds[Math.floor(Math.random() * userIds.length)];
+  let res = http.get(`${baseUrl}/api/users/${randomId}`, {
     verb: "get",
-    tags: { name: "Get all" },
+    tags: { name: "Get user" },
     headers: {
       "Content-Type": "application/json",
     },
   });
-  check(res1, {
-    "status is 200": (r) => r.status === 200,
+
+  const body = JSON.parse(res.body);
+
+  check(res, {
+    "status is 200": (r) => r.status === 200 && body.id === randomId,
   });
+};
 
-  sleep(1);
+const createUser = () => {
+  let user = makeUser();
 
-  let user = makeUser(); // Some times is generating null to stack
-  console.log(user);
-
-  let res2 = http.post(`${baseUrl}/api/users`, JSON.stringify(user), {
+  let res = http.post(`${baseUrl}/api/users`, JSON.stringify(user), {
     verb: "post",
     tags: { name: "Criação" },
     headers: {
       "Content-Type": "application/json",
     },
   });
-  check(res2, {
+
+  if (res.status === 201) {
+    const body = JSON.parse(res.body);
+    userIds.push(body.id);
+  }
+
+  check(res, {
     "status is 201": (r) => r.status === 201,
   });
+};
 
-  //   let res2 = http.get(`${baseUrl}${res1.headers["Location"]}`, {
-  //     verb: "get",
-  //     tags: { name: "Consulta" },
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   });
-  //   check(res2, {
-  //     "status is 200": (r) => r.status === 200,
-  //   });
+const searchTerm = () => {
+  let randomTerm = makeTerm();
+  let res = http.get(`${baseUrl}/api/users?t=${randomTerm}`, {
+    verb: "get",
+    tags: { name: "Busca" },
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
-  //   sleep(1);
-
-  //   let randomTerm = makeTerm();
-
-  //   let res3 = http.get(`${baseUrl}/pessoas?t=${randomTerm}`, {
-  //     verb: "get",
-  //     tags: { name: "Busca" },
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   });
-  //   check(res3, {
-  //     "status is 200": (r) => r.status === 200,
-  //   });
-}
+  check(res, {
+    "status is 200": (r) => r.status === 200,
+  });
+};
