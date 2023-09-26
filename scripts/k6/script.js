@@ -93,12 +93,26 @@ const createUser = () => {
 
 const searchTerm = () => {
   let randomTerm = makeTerm();
-  let res = http.get(`${baseUrl}/api/users?t=${randomTerm}`, {
+  let finded = false;
+  let res = http.get(`${baseUrl}/api/users?s=${randomTerm}`, {
     verb: "get",
     tags: { name: "Busca" },
     headers: {
       "Content-Type": "application/json",
     },
+  });
+
+  if (res.status === 200) {
+    const body = JSON.parse(res.body);
+    finded = body.name.includes(randomTerm);
+    finded = finded || body.nickname.includes(randomTerm);
+    body.stack.map((s) => {
+      finded = finded || s.includes(randomTerm);
+    });
+  }
+
+  check(res, {
+    "term finded": () => finded,
   });
 
   check(res, {
