@@ -10,7 +10,7 @@ CREATE TABLE
         search text NOT NULL
     );
 
-CREATE INDEX
-    CONCURRENTLY IF NOT EXISTS idx_user_trigram ON public.users USING gist (
-        search gist_trgm_ops(siglen = 64)
-    );
+-- CREATE INDEX
+--     CONCURRENTLY IF NOT EXISTS idx_user_trigram ON public.users USING gist (
+--         search gist_trgm_ops(siglen = 64)
+--     );
