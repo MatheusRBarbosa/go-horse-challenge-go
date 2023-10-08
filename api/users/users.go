@@ -4,16 +4,28 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/matheusrbarbosa/go-horse-challenge/api/requests"
 	"github.com/matheusrbarbosa/go-horse-challenge/application/handlers"
+	m "github.com/matheusrbarbosa/go-horse-challenge/domain/models"
 )
 
 func handleGetAll(ctx *fiber.Ctx) error {
 	handler := handlers.UserHandler()
-	res, err := handler.GetAll()
+
+	term := ctx.Query("s")
+	var res []m.User
+	var err error
+
+	if term != "" {
+		res, err = handler.Search(term)
+	} else {
+		res, err = handler.GetAll()
+	}
+
 	if err != nil {
 		return fiber.NewError(400, err.Error())
 	}
 
 	ctx.Status(200).JSON(res)
+
 	return nil
 }
 
