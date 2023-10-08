@@ -25,7 +25,8 @@ func handleGet(ctx *fiber.Ctx) error {
 		return fiber.NewError(400, err.Error())
 	}
 
-	return ctx.Status(200).JSON(res)
+	ctx.Status(200).JSON(res)
+	return nil
 }
 
 func handleCreate(ctx *fiber.Ctx) error {
@@ -44,5 +45,12 @@ func handleCreate(ctx *fiber.Ctx) error {
 	}
 
 	ctx.Status(201).JSON(res)
+	return nil
+}
+
+func handleCountUsers(ctx *fiber.Ctx) error {
+	handler := handlers.UserHandler()
+	total := handler.Count()
+	ctx.Status(200).JSON(total)
 	return nil
 }

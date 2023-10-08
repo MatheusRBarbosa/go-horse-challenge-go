@@ -35,3 +35,8 @@ func (h *userHandler) Create(u m.User) (m.User, error) {
 	u = h.repository.Create(u)
 	return u, nil
 }
+
+func (h *userHandler) Count() int64 {
+	total := h.repository.Count()
+	return total
+}
