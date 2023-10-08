@@ -29,6 +29,13 @@ func (r *userRepository) GetAll() ([]m.User, error) {
 	return persons, nil
 }
 
+func (r *userRepository) Search(term string) ([]m.User, error) {
+	users := []m.User{}
+	err := r.ctx.Where("name ILIKE ?", "%"+term+"%").Or("nickname ILIKE ?", "%"+term+"%").Or("stack ILIKE ?", "%"+term+"%").Find(&users).Error
+
+	return users, err
+}
+
 func (r *userRepository) GetById(id string) (m.User, error) {
 	user := m.User{}
 	uuid := uuid.MustParse(id)

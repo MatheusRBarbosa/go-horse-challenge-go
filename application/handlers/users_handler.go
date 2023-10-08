@@ -26,6 +26,12 @@ func (h *userHandler) GetAll() ([]m.User, error) {
 	return users, nil
 }
 
+func (h *userHandler) Search(term string) ([]m.User, error) {
+	users, err := h.repository.Search(term)
+
+	return users, err
+}
+
 func (h *userHandler) GetById(id string) (m.User, error) {
 	user, err := h.repository.GetById(id)
 	return user, err
