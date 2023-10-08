@@ -1,6 +1,7 @@
 package repositories
 
 import (
+	"github.com/google/uuid"
 	i "github.com/matheusrbarbosa/go-horse-challenge/domain/interfaces"
 	m "github.com/matheusrbarbosa/go-horse-challenge/domain/models"
 	"github.com/matheusrbarbosa/go-horse-challenge/infra/db"
@@ -26,6 +27,14 @@ func (r *userRepository) GetAll() ([]m.User, error) {
 	}
 
 	return persons, nil
+}
+
+func (r *userRepository) GetById(id string) (m.User, error) {
+	user := m.User{}
+	uuid := uuid.MustParse(id)
+	err := r.ctx.Where(&m.User{ID: uuid}).First(&user).Error
+
+	return user, err
 }
 
 func (r *userRepository) Create(u m.User) m.User {

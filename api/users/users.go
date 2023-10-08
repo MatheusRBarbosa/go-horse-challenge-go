@@ -17,6 +17,17 @@ func handleGetAll(ctx *fiber.Ctx) error {
 	return nil
 }
 
+func handleGet(ctx *fiber.Ctx) error {
+	handler := handlers.UserHandler()
+	id := ctx.Params("id")
+	res, err := handler.GetById(id)
+	if err != nil {
+		return fiber.NewError(400, err.Error())
+	}
+
+	return ctx.Status(200).JSON(res)
+}
+
 func handleCreate(ctx *fiber.Ctx) error {
 	req := new(requests.CreateUserRequest)
 
