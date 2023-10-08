@@ -45,3 +45,10 @@ func (r *userRepository) Create(u m.User) m.User {
 
 	return u
 }
+
+func (r *userRepository) Count() int64 {
+	var total int64
+	r.ctx.Model(&m.User{}).Count(&total)
+
+	return total
+}
